@@ -57,5 +57,17 @@ public function get_todos($limit, $offset, $status = null, $search = null)
   public function delete_todo($id) {
     return $this->db->where('id', $id)->delete('todos');
   }
+
+  public function bulk_delete($task_ids)
+{
+    if (empty($task_ids)) {
+        return false;
+    }
+    
+    $this->db->where_in('id', $task_ids);
+    $result = $this->db->delete('todos'); // Replace 'todos' with your table name
+    
+    return $result;
+}
 }
 ?>
